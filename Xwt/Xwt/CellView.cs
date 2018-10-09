@@ -1,21 +1,21 @@
-// 
+//
 // CellView.cs
-//  
+//
 // Author:
 //       Lluis Sanchez <lluis@xamarin.com>
-// 
+//
 // Copyright (c) 2011 Xamarin Inc
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,6 +27,7 @@
 using System;
 using Xwt.Drawing;
 using Xwt.Backends;
+using Xwt.Accessibility;
 using System.ComponentModel;
 using System.Collections.Generic;
 
@@ -36,6 +37,7 @@ namespace Xwt
 	{
 		Widget container;
 		bool expands;
+		Accessible accessible;
 
 		static CellView ()
 		{
@@ -82,6 +84,11 @@ namespace Xwt
 		protected class CellViewBackendHost: BackendHost<CellView,ICellViewBackend>, ICellViewEventSink
 		{
 			HashSet<object> enabledEvents;
+
+			protected override void OnBackendCreated ()
+			{
+				Console.WriteLine ("cell view backend created");
+			}
 
 			protected override void OnEnableEvent (object eventId)
 			{
@@ -205,6 +212,16 @@ namespace Xwt
 		protected bool HasFocus {
 			get { return Backend.HasFocus; }
 		}
+
+		public Accessible Accessible {
+			get {
+				if (accessible == null) {
+					accessible = new Accessible (this);
+				}
+				return accessible;
+			}
+		}
+
 
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="T:Xwt.CellView"/> expands to fill all available horizontal space.

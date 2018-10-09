@@ -47,7 +47,7 @@ namespace Xwt.Accessibility
 					b = new DefaultNoOpAccessibleBackend ();
 				return b;
 			}
-			
+
 			protected override void OnBackendCreated ()
 			{
 				object parentBackend = Parent.parentComponent?.GetBackend ();
@@ -58,6 +58,8 @@ namespace Xwt.Accessibility
 					Backend.Initialize((IPopoverBackend)parentBackend, this);
 				else if (parentBackend is IMenuBackend)
 					Backend.Initialize((IMenuBackend)parentBackend, this);
+				else if (parentBackend is ICellViewBackend)
+					Backend.Initialize((ICellViewBackend)parentBackend, this);
 				else
 					Backend.Initialize (Parent.parentNativeObject, this);
 			}
@@ -95,6 +97,20 @@ namespace Xwt.Accessibility
 			backendHost.Parent = this;
 		}
 
+		internal Accessible (CellView parent): this ((XwtComponent)parent)
+		{
+		}
+
+		Accessible (XwtComponent parent)
+		{
+			if (parent == null)
+				throw new ArgumentNullException (nameof (parent));
+			parentComponent = parent;
+			backendHost = new AccessibleBackendHost ();
+			backendHost.Parent = this;
+
+		}
+
 		internal Accessible (object nativeParent)
 		{
 			if (nativeParent == null)
@@ -103,6 +119,7 @@ namespace Xwt.Accessibility
 			backendHost = new AccessibleBackendHost ();
 			backendHost.Parent = this;
 		}
+
 
 		IAccessibleBackend Backend {
 			get { return backendHost.Backend; }
@@ -302,8 +319,17 @@ namespace Xwt.Accessibility
 		public void Initialize (IPopoverBackend parentPopover, IAccessibleEventSink eventSink)
 		{
 		}
+        
 
-		public void Initialize (object parentWidget, IAccessibleEventSink eventSink)
+        public void Initialize(IMenuBackend parentMenu, IAccessibleEventSink eventSink)
+        {
+        }
+
+        public void Initialize(ICellViewBackend parentCellView, IAccessibleEventSink eventSync)
+        {
+        }
+
+        public void Initialize (object parentWidget, IAccessibleEventSink eventSink)
 		{
 		}
 

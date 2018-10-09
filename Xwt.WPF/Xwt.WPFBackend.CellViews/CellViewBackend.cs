@@ -27,6 +27,12 @@ namespace Xwt.WPFBackend
             }
         }
 
+        public object NativeWidget {
+            get {
+                return (rendererTarget as WidgetBackend).NativeWidget;
+            }
+        }
+
         public ICellViewEventSink EventSink { get; private set; }
 
         public CellViewBackend()

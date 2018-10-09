@@ -103,6 +103,19 @@ namespace Xwt.WPFBackend
 			Initialize (popup, eventSink);
 		}
 
+        public void Initialize(IMenuBackend parentMenu, IAccessibleEventSink eventSync)
+        {
+            var menuBackend = (MenuBackend)parentMenu;
+            Initialize(menuBackend.NativeMenu, eventSink);
+        }
+
+        public void Initialize(ICellViewBackend parentCellView, IAccessibleEventSink eventSync)
+        {
+
+            var cellViewBackend = (CellViewBackend)parentCellView;
+            Initialize(cellViewBackend.CurrentElement, eventSync);
+        }
+
 		public void Initialize (object parentWidget, IAccessibleEventSink eventSink)
 		{
 			this.element = parentWidget as UIElement;

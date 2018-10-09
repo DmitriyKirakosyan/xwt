@@ -34,6 +34,8 @@ namespace Xwt.WPFBackend
 		public override void OnInitialize (CellView cellView, FrameworkElementFactory factory)
 		{
 			factory.AddHandler (SWC.Primitives.TextBoxBase.TextChangedEvent, new SWC.TextChangedEventHandler (OnTextChanged));
+			factory.AddHandler (SWC.Primitives.TextBoxBase.LoadedEvent, new RoutedEventHandler(OnTextBoxLoaded));
+
 			base.OnInitialize (cellView, factory);
 		}
 
@@ -52,6 +54,11 @@ namespace Xwt.WPFBackend
 				var e = cell.GetBindingExpression (SWC.TextBox.TextProperty);
 				e?.UpdateSource();
 			}
+		}
+
+		void OnTextBoxLoaded (object sender, RoutedEventArgs args)
+		{
+			System.Console.WriteLine ("text cell view is loaded");
 		}
 	}
 }
