@@ -41,6 +41,10 @@ namespace Samples
 			menu.Items.Add (new MenuItem ("Three"));
 			menu.Items.Add (new SeparatorMenuItem ());
 
+			menu.Accessible.Label = "This is Menu!";
+			menu.Accessible.Description = "This is a menu description";
+			menu.Accessible.Identifier = nameof(menu);
+
 			var rgroup = new RadioButtonMenuItemGroup ();
 			menu.Items.Add (new RadioButtonMenuItem ("Opt 1") { Group = rgroup, Sensitive = false });
 			menu.Items.Add (new RadioButtonMenuItem ("Opt 2") { Group = rgroup, Checked = true });

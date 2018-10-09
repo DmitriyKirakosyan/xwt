@@ -53,9 +53,11 @@ namespace Xwt.Accessibility
 				object parentBackend = Parent.parentComponent?.GetBackend ();
 
 				if (parentBackend is IWidgetBackend)
-					Backend.Initialize ((IWidgetBackend) parentBackend, this);
+					Backend.Initialize((IWidgetBackend)parentBackend, this);
 				else if (parentBackend is IPopoverBackend)
-					Backend.Initialize ((IPopoverBackend) parentBackend, this);
+					Backend.Initialize((IPopoverBackend)parentBackend, this);
+				else if (parentBackend is IMenuBackend)
+					Backend.Initialize((IMenuBackend)parentBackend, this);
 				else
 					Backend.Initialize (Parent.parentNativeObject, this);
 			}
@@ -76,6 +78,15 @@ namespace Xwt.Accessibility
 		}
 
 		internal Accessible (Popover parent)
+		{
+			if (parent == null)
+				throw new ArgumentNullException (nameof (parent));
+			parentComponent = parent;
+			backendHost = new AccessibleBackendHost ();
+			backendHost.Parent = this;
+		}
+
+		internal Accessible (Menu parent)
 		{
 			if (parent == null)
 				throw new ArgumentNullException (nameof (parent));

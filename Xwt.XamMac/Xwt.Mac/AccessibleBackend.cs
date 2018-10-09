@@ -54,6 +54,12 @@ namespace Xwt.Mac
 			// Not currently supported
 		}
 
+		// public void Initialize (IMenuBackend parentMenu, IAccessibleEventSink eventSink)
+		// {
+		// 	// var parentBackend = parentMenu as MenuBackend;
+		// 	Initialize (parentMenu, event)
+		// }
+
 		public void Initialize (object parentWidget, IAccessibleEventSink eventSink)
 		{
 			this.eventSink = eventSink;
